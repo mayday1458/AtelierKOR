@@ -5,6 +5,7 @@ import os
 import sys
 import py7zr
 import shutil
+import gdown
 from tkinter import messagebox, filedialog, StringVar, Label, Entry, Button, OptionMenu
 
 # 다운로드 링크
@@ -24,18 +25,6 @@ file_links = {
     "라이자의 아틀리에": drive_link + "1dBHaAt-hCLVdhGmXlMq0Or1z8le2iD3f",
 }
 
-# 클래스 정의: 터미널 출력을 GUI Text 위젯으로 리디렉션
-class RedirectText:
-    def __init__(self, text_widget):
-        self.text_widget = text_widget
-
-    def write(self, string):
-        self.text_widget.insert(tk.END, string)
-        #self.text_widget.see(tk.END)  # 자동 스크롤
-
-    def flush(self):
-        pass  # 표준 출력 스트림과의 호환성 위해 flush 메서드 구현
-
 def select_directory():
     """사용자가 경로를 선택하도록 하고 선택한 경로를 표시"""
     folder_selected = filedialog.askdirectory()
@@ -45,6 +34,7 @@ def select_directory():
 # 다운로드 및 압축 해제 함수
 def download_file(file_name, url):
     try:
+        output_message(f"{file_name} 한국어 패치를 실행합니다.")
         if not game_path.get():  # game_path가 비어 있는지 확인
             messagebox.showerror("오류", "스팀 라이브러리 경로를 지정해주세요")  # 오류 메시지 표시
         elif not game_path.get().endswith("steamapps/common"):  # steamapps/common으로 끝나는지 확인
@@ -122,50 +112,39 @@ def download_file(file_name, url):
                 if not os.path.exists(path):
                     messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
                     return  # 설치되지 않은 경우 함수 종료
-        
+            
             download_button.config(state=tk.DISABLED)  # 다운로드 시작 시 버튼 비활성화
             dropdown.config(state=tk.DISABLED)  # 다운로드 시작 시 드롭다운 메뉴 비활성화
-            current_dir = os.path.dirname(__file__)  # 현재 파일의 경로
+            current_dir = os.path.dirname(sys.executable)  # 현재 파일의 경로
             
             # temp 폴더 경로 설정
             temp_dir = os.path.join(current_dir, 'temp')
             os.makedirs(temp_dir, exist_ok=True)  # temp 폴더 생성 (존재하지 않을 경우)
 
+            save_path = os.path.join(temp_dir, f"{file_name}.7z")
+
             # temp 폴더 내에 zip 파일 저장 경로
-            save_path = os.path.join(temp_dir, f"{file_name}.7z") 
-            
-            # gdown 다운로드 명령을 subprocess로 실행
-            CREATE_NO_WINDOW = 0x08000000
-            command = ['gdown', url, '-O', save_path]
-            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, creationflags=CREATE_NO_WINDOW)
-
-            # 초기 메시지 출력
+            # 메시지 출력
             text_output.config(state=tk.NORMAL)  # 입력 가능 상태로 변경
-            initial_message = "패치에 필요한 파일을 다운로드하는 중입니다.\n잠시만 기다려주세요...\n"
-            text_output.insert(tk.END, initial_message)  # 텍스트 위젯에 초기 메시지 삽입
-            text_output.see(tk.END)  # 자동 스크롤
+            output_message("패치에 필요한 파일을 다운로드하는 중입니다.\n잠시만 기다려주세요...\n이 작업은 환경에 따라 1분 이상 소요될 수 있습니다.")
 
-            # 출력 실시간으로 읽어 텍스트 위젯에 표시
-            while True:
-                output = process.stdout.readline()
-                if output == '' and process.poll() is not None:
-                    break
-                if output:
-                    text_output.delete('2.13', 'end')  # 초기 메시지 이후의 내용을 삭제
-                    text_output.insert(tk.END, '\n' + output.strip() + '\n')  # 진행 상태 추가
-                    text_output.see(tk.END)  # 자동 스크롤
+            # 다운로드
+            try:
+                gdown.download(url, save_path, quiet=True)
+            except Exception as e:
+                output_message(f"Download failed: {e}")
+                return
 
-            process.wait()
-            print("다운로드가 완료되었습니다.\n압축을 해제하는 중입니다.\n잠시만 기다려주세요...")  # 다운로드 완료 메시지
+            output_message("다운로드가 완료되었습니다.\n압축을 해제하는 중입니다.\n잠시만 기다려주세요...")  # 다운로드 완료 메시지
             
             # 다운로드한 파일의 압축 해제
             with py7zr.SevenZipFile(save_path, mode='r') as archive:
                 archive.extractall(path=temp_dir)  # temp 폴더에 내용물 직접 해제
-                print("압축 해제가 완료되었습니다.")  # 압축 해제 완료 메시지
+                output_message("압축 해제가 완료되었습니다.")  # 압축 해제 완료 메시지
 
             # 압축 해제 후 .7z 파일 삭제
             os.remove(save_path)
-            print("압축 파일을 삭제하였습니다.\n한국어 패치를 적용합니다.")  # 삭제 완료 메시지
+            output_message("압축 파일을 삭제하였습니다.\n한국어 패치를 적용합니다.")  # 삭제 완료 메시지
 
             if file_name == "로로나의 아틀리에 DX":
                 setup_rorona()
@@ -195,15 +174,24 @@ def download_file(file_name, url):
             text_output.config(state=tk.DISABLED)  # 다시 입력 불가능 상태로 변경
 
     except Exception as e:
-        print(f"Error downloading {file_name}: {e}")
+        output_message(f"Error downloading {file_name}: {e}")
     finally:
         download_button.config(state=tk.NORMAL)  # 다운로드 완료 후 버튼 활성화
         dropdown.config(state=tk.NORMAL)  # 다운로드 완료 후 드롭다운 메뉴 활성화
 
+def output_message(message):
+    """텍스트 박스에 메시지를 출력하는 함수"""
+    global text_output
+    if text_output is not None:
+        text_output.config(state=tk.NORMAL)  # 텍스트 박스를 수정 가능 상태로 전환
+        text_output.insert(tk.END, message + "\n")  # 메시지 추가
+        text_output.config(state=tk.DISABLED)  # 텍스트 박스를 다시 읽기 전용으로 설정
+        text_output.yview(tk.END)  # 항상 마지막 메시지로 스크롤
+
 # 각 파일에 대해 다운로드 완료 후 호출할 함수 정의
 def setup_rorona():
     path = os.path.join(game_path.get(), "Atelier Rorona ~The Alchemist of Arland~ DX")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 폴더 복사
@@ -230,7 +218,7 @@ def setup_rorona():
 
 def setup_totori():
     path = os.path.join(game_path.get(), "Atelier Totori ~The Adventurer of Arland~ DX")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 폴더 복사
@@ -257,7 +245,7 @@ def setup_totori():
 
 def setup_meruru():
     path = os.path.join(game_path.get(), "Atelier Meruru ~The Apprentice of Arland~ DX")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 폴더 복사
@@ -284,7 +272,7 @@ def setup_meruru():
 
 def setup_ayesha():
     path = os.path.join(game_path.get(), "Atelier Ayesha DX")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 폴더 복사
@@ -311,7 +299,7 @@ def setup_ayesha():
 
 def setup_escha():
     path = os.path.join(game_path.get(), "Atelier Escha and Logy DX")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 폴더 복사
@@ -338,7 +326,7 @@ def setup_escha():
 
 def setup_shallie():
     path = os.path.join(game_path.get(), "Atelier Shallie DX")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 폴더 복사
@@ -365,7 +353,7 @@ def setup_shallie():
 
 def setup_sophie():
     path = os.path.join(game_path.get(), "Atelier Sophie DX")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 파일 복사
@@ -420,7 +408,7 @@ def setup_sophie():
 
 def setup_firis():
     path = os.path.join(game_path.get(), "Atelier Firis DX")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 파일 복사
@@ -468,7 +456,7 @@ def setup_firis():
 
 def setup_lydie():
     path = os.path.join(game_path.get(), "Atelier Lydie and Suelle DX")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 파일 복사
@@ -526,7 +514,7 @@ def setup_lydie():
 
 def setup_nelke():
     path = os.path.join(game_path.get(), "Nelke and the Legendary Alchemists Ateliers of the New World")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
     userpath = os.path.expanduser(r'~/Documents/KoeiTecmo/Nelke and the Legendary Alchemists')
 
@@ -578,7 +566,7 @@ def setup_nelke():
 
 def setup_lulua():
     path = os.path.join(game_path.get(), "Atelier Lulua")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # 파일 복사
@@ -646,7 +634,7 @@ def setup_lulua():
 
 def setup_ryza():
     path = os.path.join(game_path.get(), "Atelier Ryza")  # 게임 설치 경로
-    realpath = os.path.dirname(__file__)  # 프로그램 실행 경로
+    realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
 
     # gust_pak.exe 복사
@@ -709,9 +697,21 @@ def clear_text_output(*args):
 
 # 버튼 클릭 시 호출되는 함수
 def start_download():
-    file_name = selected_file.get()  # 드롭다운 메뉴에서 선택된 파일 이름
-    url = file_links[file_name]  # 선택된 파일 이름에 대한 URL 가져오기
-    threading.Thread(target=download_file, args=(file_name, url)).start()
+    try:
+        file_name = selected_file.get()  # 드롭다운 메뉴에서 선택된 파일 이름
+        url = file_links[file_name]  # 선택된 파일 이름에 대한 URL 가져오기
+        
+        # 디버깅을 위한 메시지 출력
+        print(f"Starting download for: {file_name}")
+        
+        threading.Thread(target=download_file, args=(file_name, url)).start()
+        
+        # 스레드가 정상적으로 시작되었는지 확인
+        print("Thread started successfully.")
+    
+    except Exception as e:
+        # 예외 발생 시 출력
+        print(f"Error starting download thread: {e}")
 
 # GUI 설정
 def create_gui():
@@ -722,7 +722,7 @@ def create_gui():
 
     window = tk.Tk()
     window.title("아틀리에 시리즈 통합 한국어 패치")
-    window.geometry("723x315")
+    window.geometry("723x260")
     window.resizable(False, False)  # 크기 조정 불가 설정
 
     # 창을 화면 중앙에 위치시키기
@@ -738,11 +738,8 @@ def create_gui():
     window.geometry(f"{width}x{height}+{x}+{y}")  # 창 위치 설정
 
     # 텍스트 출력창 생성 (입력이 불가능하도록 설정)
-    text_output = tk.Text(window, height=9, width=100, state=tk.DISABLED)
+    text_output = tk.Text(window, height=5, width=100, state=tk.DISABLED)
     text_output.grid(row=2, column=0, columnspan=3, pady=10)  # grid 사용
-
-    # sys.stdout을 텍스트 위젯으로 리디렉션
-    sys.stdout = RedirectText(text_output)
 
     global game_path
     game_path = StringVar()  # 경로를 저장하는 변수
@@ -774,3 +771,5 @@ def create_gui():
 # GUI 실행
 if __name__ == "__main__":
     create_gui()
+
+# pyinstaller --onefile --windowed --hidden-import=gdown Atelier_KOR_Translator.py
