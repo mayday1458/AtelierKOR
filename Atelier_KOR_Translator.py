@@ -6,7 +6,8 @@ import sys
 import py7zr
 import shutil
 import gdown
-from tkinter import messagebox, filedialog, StringVar, Label, Entry, Button, OptionMenu
+import webbrowser
+from tkinter import messagebox, filedialog, StringVar, Label, Entry, Button, OptionMenu, font
 
 # 다운로드 링크
 drive_link = "https://drive.google.com/uc?id="
@@ -672,6 +673,9 @@ def start_download():
         # 예외 발생 시 출력
         print(f"Error starting download thread: {e}")
 
+def open_webpage():
+    webbrowser.open("https://gall.dcinside.com/mgallery/board/view/?id=atelierseries&no=88890")
+
 # GUI 설정
 def create_gui():
     global text_output  # 전역으로 선언하여 다운로드 함수에서 접근 가능
@@ -681,7 +685,7 @@ def create_gui():
 
     window = tk.Tk()
     window.title("아틀리에 시리즈 통합 한국어 패치")
-    window.geometry("723x260")
+    window.geometry("723x290")
     window.resizable(False, False)  # 크기 조정 불가 설정
 
     # 창을 화면 중앙에 위치시키기
@@ -698,7 +702,7 @@ def create_gui():
 
     # 텍스트 출력창 생성 (입력이 불가능하도록 설정)
     text_output = tk.Text(window, height=5, width=100, state=tk.DISABLED)
-    text_output.grid(row=2, column=0, columnspan=3, pady=10)  # grid 사용
+    text_output.grid(row=3, column=0, columnspan=3, pady=10)  # grid 사용
 
     global game_path
     game_path = StringVar()  # 경로를 저장하는 변수
@@ -714,16 +718,26 @@ def create_gui():
     # 기본 경로 안내 문구 추가
     Label(window, text="※ 스팀 라이브러리 기본 경로는 C:\\Program Files (x86)\\Steam\\steamapps\\common입니다.").grid(row=1, column=0, columnspan=3, padx=10, pady=10)
 
+    # 기본 폰트를 가져오고 밑줄 추가
+    default_font = font.nametofont("TkDefaultFont")
+    underline_font = default_font.copy()
+    underline_font.configure(underline=True)
+
+    # 설치 가이드 보기 라벨 추가 (파란색 밑줄, 하이퍼링크)
+    guide_label = Label(window, text="설치 가이드 보기", fg="blue", cursor="hand2", font=underline_font)
+    guide_label.grid(row=2, column=0, columnspan=3, padx=10, pady=5)
+    guide_label.bind("<Button-1>", lambda e: open_webpage())
+
     # 드롭다운 메뉴 생성
     global selected_file
     selected_file = StringVar(window)  # 선택된 파일 이름 저장
     selected_file.set(list(file_links.keys())[11])  # 기본값 설정
     dropdown = OptionMenu(window, selected_file, *file_links.keys(), command=clear_text_output)
-    dropdown.grid(row=3, column=0, columnspan=3, padx=0, pady=5)
+    dropdown.grid(row=4, column=0, columnspan=3, padx=0, pady=5)
 
     # 다운로드 버튼 생성
     download_button = Button(window, text="패치 실행", command=start_download)  # 인자 없이 함수 호출
-    download_button.grid(row=4, column=0, columnspan=3, padx=10, pady=5)
+    download_button.grid(row=5, column=0, columnspan=3, padx=10, pady=5)
 
     window.mainloop()
 
