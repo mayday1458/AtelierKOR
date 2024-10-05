@@ -40,7 +40,8 @@ def download_file(file_name, url):
             messagebox.showerror("오류", "스팀 라이브러리 경로가 유효하지 않습니다.\n...\\steamapps\\common 폴더를 지정해주세요.")
         else:
             # 게임 설치 및 경로 지정이 올바른지 확인
-            check_game_installation(file_name)
+            if not check_game_installation(file_name):  # 경로가 없으면 함수 종료
+                return
             
             output_message(f"{file_name} 한국어 패치를 실행합니다.")
 
@@ -140,9 +141,11 @@ def check_game_installation(file_name):
                 messagebox.showerror("오류", f"{file_name}이 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
             else:
                 messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-            return  # 설치되지 않은 경우 함수 종료
+            return False  # 설치되지 않은 경우 False 반환
+        return True  # 설치 경로가 올바르면 True 반환
     else:
         messagebox.showerror("오류", f"{file_name}는 지원되지 않는 게임입니다.")
+        return False  # 지원되지 않는 게임이면 False 반환
 
 # 각 파일에 대해 다운로드 완료 후 호출할 함수 정의
 def setup_rorona():
