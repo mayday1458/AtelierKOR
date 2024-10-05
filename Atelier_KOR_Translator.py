@@ -34,98 +34,30 @@ def select_directory():
 # 다운로드 및 압축 해제 함수
 def download_file(file_name, url):
     try:
-        output_message(f"{file_name} 한국어 패치를 실행합니다.")
         if not game_path.get():  # game_path가 비어 있는지 확인
             messagebox.showerror("오류", "스팀 라이브러리 경로를 지정해주세요")  # 오류 메시지 표시
         elif not game_path.get().endswith("steamapps/common"):  # steamapps/common으로 끝나는지 확인
             messagebox.showerror("오류", "스팀 라이브러리 경로가 유효하지 않습니다.\n...\\steamapps\\common 폴더를 지정해주세요.")
         else:
-            if file_name == "로로나의 아틀리에 DX":
-                path = os.path.join(game_path.get(), "Atelier Rorona ~The Alchemist of Arland~ DX")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "토토리의 아틀리에 DX":
-                path = os.path.join(game_path.get(), "Atelier Totori ~The Adventurer of Arland~ DX")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "메루루의 아틀리에 DX":
-                path = os.path.join(game_path.get(), "Atelier Meruru ~The Apprentice of Arland~ DX")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "아샤의 아틀리에 DX":
-                path = os.path.join(game_path.get(), "Atelier Ayesha DX")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "에스카&로지의 아틀리에 DX":
-                path = os.path.join(game_path.get(), "Atelier Escha and Logy DX")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "샤리의 아틀리에 DX":
-                path = os.path.join(game_path.get(), "Atelier Shallie DX")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "소피의 아틀리에 DX":
-                path = os.path.join(game_path.get(), "Atelier Sophie DX")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "피리스의 아틀리에 DX":
-                path = os.path.join(game_path.get(), "Atelier Firis DX")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "리디&수르의 아틀리에 DX":
-                path = os.path.join(game_path.get(), "Atelier Lydie and Suelle DX")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "네르케와 전설의 연금술사들":
-                path = os.path.join(game_path.get(), "Nelke and the Legendary Alchemists Ateliers of the New World")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}이 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "루루아의 아틀리에":
-                path = os.path.join(game_path.get(), "Atelier Lulua")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
-            elif file_name == "라이자의 아틀리에":
-                path = os.path.join(game_path.get(), "Atelier Ryza")  # 게임 설치 경로
-                 # 설치된 경로가 존재하는지 확인
-                if not os.path.exists(path):
-                    messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
-                    return  # 설치되지 않은 경우 함수 종료
+            # 게임 설치 및 경로 지정이 올바른지 확인
+            check_game_installation(file_name)
             
-            download_button.config(state=tk.DISABLED)  # 다운로드 시작 시 버튼 비활성화
-            dropdown.config(state=tk.DISABLED)  # 다운로드 시작 시 드롭다운 메뉴 비활성화
+            output_message(f"{file_name} 한국어 패치를 실행합니다.")
+
+            # 메뉴 비활성화
+            download_button.config(state=tk.DISABLED)
+            dropdown.config(state=tk.DISABLED)
+
+            # 경로 설정
             current_dir = os.path.dirname(sys.executable)  # 현재 파일의 경로
-            
-            # temp 폴더 경로 설정
+
             temp_dir = os.path.join(current_dir, 'temp')
             os.makedirs(temp_dir, exist_ok=True)  # temp 폴더 생성 (존재하지 않을 경우)
 
-            save_path = os.path.join(temp_dir, f"{file_name}.7z")
+            save_path = os.path.join(temp_dir, f"{file_name}.7z")  # temp 폴더 내에 압축 파일 저장 경로
 
-            # temp 폴더 내에 zip 파일 저장 경로
-            # 메시지 출력
             text_output.config(state=tk.NORMAL)  # 입력 가능 상태로 변경
+            
             output_message("패치에 필요한 파일을 다운로드하는 중입니다.\n잠시만 기다려주세요...\n이 작업은 환경에 따라 1분 이상 소요될 수 있습니다.")
 
             # 다운로드
@@ -144,32 +76,26 @@ def download_file(file_name, url):
 
             # 압축 해제 후 .7z 파일 삭제
             os.remove(save_path)
-            output_message("압축 파일을 삭제하였습니다.\n한국어 패치를 적용합니다.")  # 삭제 완료 메시지
+            output_message("압축 파일을 삭제하였습니다.\n한국어 패치를 설치합니다.")  # 삭제 완료 메시지
 
-            if file_name == "로로나의 아틀리에 DX":
-                setup_rorona()
-            elif file_name == "토토리의 아틀리에 DX":
-                setup_totori()
-            elif file_name == "메루루의 아틀리에 DX":
-                setup_meruru()
-            elif file_name == "아샤의 아틀리에 DX":
-                setup_ayesha()
-            elif file_name == "에스카&로지의 아틀리에 DX":
-                setup_escha()
-            elif file_name == "샤리의 아틀리에 DX":
-                setup_shallie()
-            elif file_name == "소피의 아틀리에 DX":
-                setup_sophie()
-            elif file_name == "피리스의 아틀리에 DX":
-                setup_firis()
-            elif file_name == "리디&수르의 아틀리에 DX":
-                setup_lydie()
-            elif file_name == "네르케와 전설의 연금술사들":
-                setup_nelke()
-            elif file_name == "루루아의 아틀리에":
-                setup_lulua()
-            elif file_name == "라이자의 아틀리에":
-                setup_ryza()
+            # 패치 실행
+            setup_functions = {
+                "로로나의 아틀리에 DX": setup_rorona,
+                "토토리의 아틀리에 DX": setup_totori,
+                "메루루의 아틀리에 DX": setup_meruru,
+                "아샤의 아틀리에 DX": setup_ayesha,
+                "에스카&로지의 아틀리에 DX": setup_escha,
+                "샤리의 아틀리에 DX": setup_shallie,
+                "소피의 아틀리에 DX": setup_sophie,
+                "피리스의 아틀리에 DX": setup_firis,
+                "리디&수르의 아틀리에 DX": setup_lydie,
+                "네르케와 전설의 연금술사들": setup_nelke,
+                "루루아의 아틀리에": setup_lulua,
+                "라이자의 아틀리에": setup_ryza,
+            }
+
+            if file_name in setup_functions:
+                setup_functions[file_name]()
             
             text_output.config(state=tk.DISABLED)  # 다시 입력 불가능 상태로 변경
 
@@ -187,6 +113,36 @@ def output_message(message):
         text_output.insert(tk.END, message + "\n")  # 메시지 추가
         text_output.config(state=tk.DISABLED)  # 텍스트 박스를 다시 읽기 전용으로 설정
         text_output.yview(tk.END)  # 항상 마지막 메시지로 스크롤
+
+# 게임 이름과 설치 경로를 매핑하는 딕셔너리
+game_paths = {
+    "로로나의 아틀리에 DX": "Atelier Rorona ~The Alchemist of Arland~ DX",
+    "토토리의 아틀리에 DX": "Atelier Totori ~The Adventurer of Arland~ DX",
+    "메루루의 아틀리에 DX": "Atelier Meruru ~The Apprentice of Arland~ DX",
+    "아샤의 아틀리에 DX": "Atelier Ayesha DX",
+    "에스카&로지의 아틀리에 DX": "Atelier Escha and Logy DX",
+    "샤리의 아틀리에 DX": "Atelier Shallie DX",
+    "소피의 아틀리에 DX": "Atelier Sophie DX",
+    "피리스의 아틀리에 DX": "Atelier Firis DX",
+    "리디&수르의 아틀리에 DX": "Atelier Lydie and Suelle DX",
+    "네르케와 전설의 연금술사들": "Nelke and the Legendary Alchemists Ateliers of the New World",
+    "루루아의 아틀리에": "Atelier Lulua",
+    "라이자의 아틀리에": "Atelier Ryza"
+}
+
+def check_game_installation(file_name):
+    # 파일 이름에 해당하는 설치 경로 찾기
+    if file_name in game_paths:
+        path = os.path.join(game_path.get(), game_paths[file_name])  # 게임 설치 경로
+        # 설치된 경로가 존재하는지 확인
+        if not os.path.exists(path):
+            if file_name == "네르케와 전설의 연금술사들":
+                messagebox.showerror("오류", f"{file_name}이 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
+            else:
+                messagebox.showerror("오류", f"{file_name}가 설치되지 않았습니다.\n스팀 라이브러리 경로를 다시 한 번 확인해주세요.")
+            return  # 설치되지 않은 경우 함수 종료
+    else:
+        messagebox.showerror("오류", f"{file_name}는 지원되지 않는 게임입니다.")
 
 # 각 파일에 대해 다운로드 완료 후 호출할 함수 정의
 def setup_rorona():
