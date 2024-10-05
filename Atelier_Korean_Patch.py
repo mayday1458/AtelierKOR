@@ -7,7 +7,7 @@ import py7zr
 import shutil
 import gdown
 import webbrowser
-from tkinter import messagebox, filedialog, StringVar, Label, Entry, Button, OptionMenu, font
+from tkinter import messagebox, filedialog, StringVar, Label, Entry, Button, OptionMenu, font, DISABLED, NORMAL
 
 # 다운로드 링크
 drive_link = "https://drive.google.com/uc?id="
@@ -47,7 +47,7 @@ def download_file(file_name, url):
             output_message(f"{file_name} 한국어 패치를 실행합니다.")
 
             # 메뉴 비활성화
-            download_button.config(state=tk.DISABLED)
+            patch_button.config(state=tk.DISABLED)
             dropdown.config(state=tk.DISABLED)
 
             # 경로 설정
@@ -104,7 +104,7 @@ def download_file(file_name, url):
     except Exception as e:
         output_message(f"Error downloading {file_name}: {e}")
     finally:
-        download_button.config(state=tk.NORMAL)  # 다운로드 완료 후 버튼 활성화
+        patch_button.config(state=tk.NORMAL)  # 다운로드 완료 후 버튼 활성화
         dropdown.config(state=tk.NORMAL)  # 다운로드 완료 후 드롭다운 메뉴 활성화
 
 def output_message(message):
@@ -171,6 +171,8 @@ def setup_rorona():
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
 
+    output_message("패치가 완료되었습니다.")
+
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "로로나의 아틀리에 DX\n한국어 패치가 완료되었습니다!")
 
@@ -197,6 +199,8 @@ def setup_totori():
     temp_folder_path = os.path.join(realpath, "temp")
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
+
+    output_message("패치가 완료되었습니다.")
 
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "토토리의 아틀리에 DX\n한국어 패치가 완료되었습니다!")
@@ -225,6 +229,8 @@ def setup_meruru():
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
 
+    output_message("패치가 완료되었습니다.")
+
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "메루루의 아틀리에 DX\n한국어 패치가 완료되었습니다!")
 
@@ -251,6 +257,8 @@ def setup_ayesha():
     temp_folder_path = os.path.join(realpath, "temp")
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
+
+    output_message("패치가 완료되었습니다.")
 
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "아샤의 아틀리에 DX\n한국어 패치가 완료되었습니다!")
@@ -279,6 +287,8 @@ def setup_escha():
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
 
+    output_message("패치가 완료되었습니다.")
+
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "에스카&로지의 아틀리에 DX\n한국어 패치가 완료되었습니다!")
 
@@ -305,6 +315,8 @@ def setup_shallie():
     temp_folder_path = os.path.join(realpath, "temp")
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
+
+    output_message("패치가 완료되었습니다.")
 
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "샤리의 아틀리에 DX\n한국어 패치가 완료되었습니다!")
@@ -361,6 +373,8 @@ def setup_sophie():
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
 
+    output_message("패치가 완료되었습니다.")
+
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "소피의 아틀리에 DX\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 일본어로 변경해주세요.")
 
@@ -408,6 +422,8 @@ def setup_firis():
     temp_folder_path = os.path.join(realpath, "temp")
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
+
+    output_message("패치가 완료되었습니다.")
 
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "피리스의 아틀리에 DX\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 일본어로 변경해주세요.")
@@ -467,6 +483,8 @@ def setup_lydie():
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
 
+    output_message("패치가 완료되었습니다.")
+
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "리디&수르의 아틀리에 DX\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 일본어로 변경해주세요.")
 
@@ -518,6 +536,8 @@ def setup_nelke():
     temp_folder_path = os.path.join(realpath, "temp")
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
+
+    output_message("패치가 완료되었습니다.")
 
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "네르케와 전설의 연금술사들\n한국어 패치가 완료되었습니다!")
@@ -587,6 +607,8 @@ def setup_lulua():
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
 
+    output_message("패치가 완료되었습니다.")
+
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "루루아의 아틀리에\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 일본어로 변경해주세요.")
 
@@ -644,6 +666,8 @@ def setup_ryza():
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
 
+    output_message("패치가 완료되었습니다.")
+
     # 패치가 완료된 후 메시지 박스 표시
     messagebox.showinfo("패치 완료", "라이자의 아틀리에\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 중국어 번체로 변경해주세요.")
 
@@ -655,8 +679,8 @@ def clear_text_output(*args):
     text_output.delete(1.0, tk.END)  # 텍스트 박스 내용 삭제
     text_output.config(state=tk.DISABLED)  # 다시 입력 불가능 상태로 변경
 
-# 버튼 클릭 시 호출되는 함수
-def start_download():
+# 패치 실행
+def run_patch():
     try:
         file_name = selected_file.get()  # 드롭다운 메뉴에서 선택된 파일 이름
         url = file_links[file_name]  # 선택된 파일 이름에 대한 URL 가져오기
@@ -676,17 +700,22 @@ def start_download():
 def open_webpage():
     webbrowser.open("https://gall.dcinside.com/mgallery/board/view/?id=atelierseries&no=88890")
 
+def update_button_state(*args):
+    # 드롭다운 메뉴 값이 '타이틀 선택'일 경우 버튼 비활성화
+    if selected_file.get() == "타이틀 선택":
+        patch_button.config(state=DISABLED)
+    else:
+        patch_button.config(state=NORMAL)
+
 # GUI 설정
 def create_gui():
-    global text_output  # 전역으로 선언하여 다운로드 함수에서 접근 가능
-    global window
-    global download_button
-    global dropdown
+    global text_output, window, patch_button, dropdown, game_path
 
     window = tk.Tk()
     window.title("아틀리에 시리즈 통합 한국어 패치")
-    window.geometry("723x290")
+    window.geometry("800x350")
     window.resizable(False, False)  # 크기 조정 불가 설정
+    window.grid_propagate(False)
 
     # 창을 화면 중앙에 위치시키기
     window.update_idletasks()  # 모든 위젯이 화면에 배치되도록 업데이트
@@ -700,23 +729,25 @@ def create_gui():
     y = (screen_height // 2) - (height // 2)
     window.geometry(f"{width}x{height}+{x}+{y}")  # 창 위치 설정
 
-    # 텍스트 출력창 생성 (입력이 불가능하도록 설정)
-    text_output = tk.Text(window, height=5, width=100, state=tk.DISABLED)
-    text_output.grid(row=3, column=0, columnspan=3, pady=10)  # grid 사용
+    # 프레임 생성
+    top_frame = tk.Frame(window)
+    top_frame.grid(padx=32, pady=(15,0))  # 프레임을 창에 추가하고 패딩 추가
 
-    global game_path
+    # 게임 설치 경로 라벨, 텍스트 박스 & 경로 선택 버튼
     game_path = StringVar()  # 경로를 저장하는 변수
 
-    # 게임 설치 경로 라벨과 텍스트박스
-    Label(window, text="스팀 라이브러리 경로:").grid(row=0, column=0, padx=5, pady=10)
-    Entry(window, textvariable=game_path, width=70).grid(row=0, column=1, padx=5, pady=10)
+    Label(top_frame, text="스팀 라이브러리 경로:").grid(row=0, column=0, padx=(80,0), pady=(20,10))
+    Entry(top_frame, textvariable=game_path, width=50).grid(row=0, column=1, padx=10, pady=(20,10))
 
-    # 경로 선택 버튼
-    select_button = Button(window, text="경로 선택", command=select_directory)
-    select_button.grid(row=0, column=2, padx=10, pady=10)
+    select_button = Button(top_frame, text="경로 선택", command=select_directory)
+    select_button.grid(row=0, column=2, padx=10, pady=(20,10))
+
+    # 프레임 생성
+    bottom_frame = tk.Frame(window)
+    bottom_frame.grid(padx=32, pady=0)  # 프레임을 창에 추가하고 패딩 추가
 
     # 기본 경로 안내 문구 추가
-    Label(window, text="※ 스팀 라이브러리 기본 경로는 C:\\Program Files (x86)\\Steam\\steamapps\\common입니다.").grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+    Label(bottom_frame, text="※ 스팀 라이브러리 기본 경로는 C:\\Program Files (x86)\\Steam\\steamapps\\common입니다.").grid(row=1, column=0, columnspan=3, padx=(75,0), pady=10)
 
     # 기본 폰트를 가져오고 밑줄 추가
     default_font = font.nametofont("TkDefaultFont")
@@ -724,20 +755,30 @@ def create_gui():
     underline_font.configure(underline=True)
 
     # 설치 가이드 보기 라벨 추가 (파란색 밑줄, 하이퍼링크)
-    guide_label = Label(window, text="설치 가이드 보기", fg="blue", cursor="hand2", font=underline_font)
-    guide_label.grid(row=2, column=0, columnspan=3, padx=10, pady=5)
+    guide_label = Label(bottom_frame, text="설치 가이드 보기", fg="blue", cursor="hand2", font=underline_font)
+    guide_label.grid(row=2, column=0, columnspan=3, padx=(75,0), pady=(0,15))
     guide_label.bind("<Button-1>", lambda e: open_webpage())
+
+    # 텍스트 출력창 생성 (입력이 불가능하도록 설정)
+    text_output = tk.Text(bottom_frame, height=5, width=70, state=tk.DISABLED)
+    text_output.grid(row=3, column=0, columnspan=3, padx=(75,0), pady=10)
 
     # 드롭다운 메뉴 생성
     global selected_file
-    selected_file = StringVar(window)  # 선택된 파일 이름 저장
-    selected_file.set(list(file_links.keys())[11])  # 기본값 설정
-    dropdown = OptionMenu(window, selected_file, *file_links.keys(), command=clear_text_output)
-    dropdown.grid(row=4, column=0, columnspan=3, padx=0, pady=5)
+    selected_file = StringVar(bottom_frame)  # 선택된 파일 이름 저장
+    selected_file.set("타이틀 선택")  # 기본값을 '타이틀 선택'으로 설정 (설명 문자열)
+    selected_file.trace("w", update_button_state)  # 드롭다운 값 변경 시 update_button_state 함수 호출
 
-    # 다운로드 버튼 생성
-    download_button = Button(window, text="패치 실행", command=start_download)  # 인자 없이 함수 호출
-    download_button.grid(row=5, column=0, columnspan=3, padx=10, pady=5)
+    # 드롭다운 메뉴 생성 (선택 가능한 항목은 file_links.keys()만 포함)
+    dropdown = OptionMenu(bottom_frame, selected_file, *file_links.keys(), command=clear_text_output)
+    dropdown.grid(row=4, column=0, columnspan=3, padx=(75,0), pady=(13,5))
+
+    # 패치 실행 버튼 생성   
+    patch_button = Button(bottom_frame, text="패치 실행", command=run_patch)
+    patch_button.grid(row=5, column=0, columnspan=3, padx=(75,0), pady=5)
+
+    # 초기 버튼 상태 비활성화
+    patch_button.config(state=DISABLED)
 
     window.mainloop()
 
@@ -745,4 +786,4 @@ def create_gui():
 if __name__ == "__main__":
     create_gui()
 
-# pyinstaller --onefile --windowed --hidden-import=gdown Atelier_KOR_Translator.py
+# pyinstaller --onefile --windowed --hidden-import=gdown Atelier_Korean_Patch.py
