@@ -245,12 +245,20 @@ def find_library_path(title):
         # 해당 경로에 folder_name 폴더가 존재하는지 확인
         if os.path.exists(os.path.join(path, DB[title][0])):
             library_path = path
+
+            if title == "네르케와 전설의 연금술사들":
+                print_message(f"{title}을 기반으로 경로가 설정되었습니다.")
+            else:
+                print_message(f"{title}를 기반으로 경로가 설정되었습니다.")
             found = True
             break  # 일치하는 경로를 찾으면 종료
     
     if not found:
         library_path = "Not found"
-        print_message("스팀 라이브러리 경로를 찾지 못했습니다.")
+        if title == "네르케와 전설의 연금술사들":
+            print_message(f"{title}이 설치되지 않았습니다.")
+        else:
+            print_message(f"{title}가 설치되지 않았습니다.")
 
 # 라이브러리 경로 초기화
 def set_library(title):
@@ -260,10 +268,7 @@ def set_library(title):
         messagebox.showerror("오류", "스팀이 설치되지 않았습니다.")
     else:
         find_library_path(title)
-        if title == "네르케와 전설의 연금술사들":
-            print_message(f"{title}을 기반으로 경로가 설정되었습니다.")
-        else:
-            print_message(f"{title}를 기반으로 경로가 설정되었습니다.")
+
 
 # 다운로드 및 압축 해제 함수
 def download_file(title):
