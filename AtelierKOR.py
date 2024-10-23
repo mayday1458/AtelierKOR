@@ -352,9 +352,7 @@ def unzip_file(title, save_path, temp_path):
 # 패치를 실행하는 함수
 def patch_file(title):
     print_message("한국어 패치를 적용합니다.")
-    apply_patch(title)
-
-def apply_patch(title):
+    
     path = os.path.join(library_path, DB[title][0])  # 게임 설치 경로
     realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
@@ -408,4 +406,4 @@ def apply_patch(title):
 # GUI 실행
 create_gui()
 
-# pyinstaller --onefile --windowed --hidden-import=gdown --icon=icon.ico --add-data "icon.png;." Atelier_Korean_Patch.py
+# pyinstaller --onefile --windowed --hidden-import=gdown --icon=icon.ico --add-data "icon.png;." AtelierKOR.py
