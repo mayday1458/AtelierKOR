@@ -187,9 +187,9 @@ def create_gui():
 
     # 아이콘 추가
     if getattr(sys, 'frozen', False):  # 패키징된 상태인지 확인
-        current_dir = os.path.dirname(sys.executable)  # 패키징
+        current_dir = sys._MEIPASS  # 패키징된 실행 파일의 임시 경로
     else:
-        current_dir = os.path.dirname(__file__)  # 개발 중
+        current_dir = os.path.dirname(__file__)  # 개발 중일 때 현재 스크립트의 경로
 
     icon_file = os.path.join(current_dir, 'icon.png')
     icon = PhotoImage(file=icon_file)
