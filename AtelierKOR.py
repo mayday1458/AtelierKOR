@@ -187,9 +187,9 @@ def create_gui():
 
     # 아이콘 추가
     if getattr(sys, 'frozen', False):  # 패키징된 상태인지 확인
-        current_dir = sys._MEIPASS  # 패키징된 실행 파일의 임시 경로
+        current_dir = os.path.dirname(sys.executable)  # 패키징
     else:
-        current_dir = os.path.dirname(__file__)  # 개발 중일 때 현재 스크립트의 경로
+        current_dir = os.path.dirname(__file__)  # 개발 중
 
     icon_file = os.path.join(current_dir, 'icon.png')
     icon = PhotoImage(file=icon_file)
@@ -252,7 +252,7 @@ def update_button_state(*args):
         set_library(selected_title.get())
 
 # 패치 실행
-def run_patch(selected_title, message_widget, patch_button, dropdown_menu):
+def run_patch():
     try:
         title = selected_title.get()  # 드롭다운 메뉴에서 선택한 타이틀
 
@@ -270,7 +270,7 @@ def run_patch(selected_title, message_widget, patch_button, dropdown_menu):
             message_widget.config(state=NORMAL)
             
             print(f"Starting download for: {title}") # 디버깅 메시지
-            threading.Thread(target=download_file, args=(title)).start()
+            threading.Thread(target=download_file, args=(title,)).start()
             print("Thread started successfully.") # 디버깅 메시지
 
             patch_button.config(state=NORMAL)
