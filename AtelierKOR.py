@@ -265,17 +265,9 @@ def run_patch():
                 messagebox.showerror("오류", f"{title}가 설치되지 않았습니다.")
                 return
         else:
-            patch_button.config(state=DISABLED)
-            dropdown_menu.config(state=DISABLED)
-            message_widget.config(state=NORMAL)
-            
             print(f"Starting download for: {title}") # 디버깅 메시지
             threading.Thread(target=download_file, args=(title,)).start()
             print("Thread started successfully.") # 디버깅 메시지
-
-            patch_button.config(state=NORMAL)
-            dropdown_menu.config(state=NORMAL)
-            message_widget.config(state=DISABLED)
 
     except Exception as e:
         print(f"Error starting download thread: {e}") # 디버깅 메시지
@@ -311,6 +303,10 @@ def set_library(title):
 
 # 파일을 다운로드하는 함수
 def download_file(title):
+    patch_button.config(state=DISABLED)
+    dropdown_menu.config(state=DISABLED)
+    message_widget.config(state=NORMAL)
+
     # 경로 설정
     current_path = os.path.dirname(sys.executable)  # 패치 프로그램 경로
     temp_path = os.path.join(current_path, 'temp') # temp 폴더 경로
@@ -394,6 +390,10 @@ def patch_file(title):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
 
     print_message("패치가 완료되었습니다.")
+
+    patch_button.config(state=NORMAL)
+    dropdown_menu.config(state=NORMAL)
+    message_widget.config(state=DISABLED)
 
     # 패치가 완료된 후 메시지 박스 표시
     if title in ["소피의 아틀리에 DX", "피리스의 아틀리에 DX", "리디&수르의 아틀리에 DX", "루루아의 아틀리에"]:
