@@ -7,6 +7,7 @@ import sys
 import gdown
 import py7zr
 import winreg
+import fnmatch
 import vdf
 import tkinter as tk
 from tkinter import PhotoImage, messagebox, StringVar, Label, Button, OptionMenu, font, DISABLED, NORMAL
@@ -161,7 +162,6 @@ class SteamPath:
 # 전역 변수
 steam_path = SteamPath()
 library_list = steam_path.library_path
-library_path = "Not found"
 
 # GUI 설정
 def create_gui():
@@ -251,6 +251,37 @@ def update_button_state(*args):
         patch_button.config(state=NORMAL)
         set_library(selected_title.get())
 
+# 라이브러리 경로를 설정하는 함수
+def set_library(title):
+    global library_path
+    library_path = "Not found"
+
+    if not library_list:
+        messagebox.showerror("오류", "스팀이 설치되지 않았습니다.")
+    else:
+        found = False # 라이브러리를 찾았는지 여부를 체크하는 변수
+
+        # library_data의 경로와 folder_name이 포함된 리스트 검색
+        for entry in steam_path.library_data:
+            global lib_path
+            lib_path = entry[0]
+            # 선택된 타이틀의 설치 폴더가 존재하는지 확인
+            if os.path.exists(os.path.join(lib_path, DB[title][0])):
+                library_path = lib_path
+
+                if title == "네르케와 전설의 연금술사들":
+                    print_message(f"{title}을 기반으로 경로가 설정되었습니다.")
+                else:
+                    print_message(f"{title}를 기반으로 경로가 설정되었습니다.")
+                found = True
+                break  # 일치하는 경로를 찾으면 종료
+        
+        if not found:
+            if title == "네르케와 전설의 연금술사들":
+                print_message(f"{title}이 설치되지 않았습니다.")
+            else:
+                print_message(f"{title}가 설치되지 않았습니다.")
+
 # 패치 실행
 def run_patch():
     try:
@@ -265,41 +296,15 @@ def run_patch():
                 messagebox.showerror("오류", f"{title}가 설치되지 않았습니다.")
                 return
         else:
-            print(f"Starting download for: {title}") # 디버깅 메시지
-            threading.Thread(target=download_file, args=(title,)).start()
-            print("Thread started successfully.") # 디버깅 메시지
+            if fnmatch.filter(os.listdir(os.path.join(lib_path, DB[title][0])), '*.exe'):
+                print(f"Starting download for: {title}") # 디버깅 메시지
+                threading.Thread(target=download_file, args=(title,)).start()
+                print("Thread started successfully.") # 디버깅 메시지
+            else:
+                messagebox.showerror("오류", "게임 설치가 완료된 뒤에 패치를 진행해주세요.")
 
     except Exception as e:
         print(f"Error starting download thread: {e}") # 디버깅 메시지
-
-# 라이브러리 경로를 설정하는 함수
-def set_library(title):
-    global library_path
-
-    if not library_list:
-        messagebox.showerror("오류", "스팀이 설치되지 않았습니다.")
-    else:
-        found = False # 라이브러리를 찾았는지 여부를 체크하는 변수
-
-        # library_data의 경로와 folder_name이 포함된 리스트 검색
-        for entry in steam_path.library_data:
-            path = entry[0]
-            # 선택된 타이틀의 설치 폴더가 존재하는지 확인
-            if os.path.exists(os.path.join(path, DB[title][0])):
-                library_path = path
-
-                if title == "네르케와 전설의 연금술사들":
-                    print_message(f"{title}을 기반으로 경로가 설정되었습니다.")
-                else:
-                    print_message(f"{title}를 기반으로 경로가 설정되었습니다.")
-                found = True
-                break  # 일치하는 경로를 찾으면 종료
-        
-        if not found:
-            if title == "네르케와 전설의 연금술사들":
-                print_message(f"{title}이 설치되지 않았습니다.")
-            else:
-                print_message(f"{title}가 설치되지 않았습니다.")
 
 # 파일을 다운로드하는 함수
 def download_file(title):
@@ -323,7 +328,7 @@ def download_file(title):
     try:
         gdown.download(download_url, save_path, quiet=True)
     except Exception as e:
-        print_message(f"다운로드 실패: {e}") # 디버깅 메시지
+        print_message(f"Download failed: {e}") # 디버깅 메시지
         return
 
     print_message("다운로드가 완료되었습니다.")
@@ -341,13 +346,13 @@ def unzip_file(title, save_path, temp_path):
 
     # 압축 파일 삭제
     os.remove(save_path)
-    print_message("압축 파일을 삭제하였습니다.")
+    print_message("압축 파일 삭제가 완료되었습니다.")
 
     patch_file(title)
 
 # 패치를 실행하는 함수
 def patch_file(title):
-    print_message("한국어 패치를 적용합니다.")
+    print_message("한국어 패치를 설치합니다.")
     
     path = os.path.join(library_path, DB[title][0])  # 게임 설치 경로
     realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
@@ -384,7 +389,9 @@ def patch_file(title):
             shutil.copytree(src_folder, dest_folder, dirs_exist_ok=True)  # 기존 폴더 덮어쓰기
 
     # 파일 삭제
-    os.remove(os.path.join(path, "gust_pak.exe"))  # 삭제
+    if os.path.exists(os.path.join(path, "gust_pak.exe")):
+        os.remove(os.path.join(path, "gust_pak.exe"))  # 삭제
+
     temp_folder_path = os.path.join(realpath, "temp")
     if os.path.exists(temp_folder_path):
         shutil.rmtree(temp_folder_path)  # temp 폴더와 그 안의 모든 내용 삭제
@@ -402,6 +409,8 @@ def patch_file(title):
         messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 중국어 번체로 변경해주세요.")
     else:
         messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!")
+    root.quit()
+    root.destroy()
 
 # GUI 실행
 create_gui()
