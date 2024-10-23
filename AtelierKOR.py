@@ -397,9 +397,9 @@ def patch_file(title):
 
     # 패치가 완료된 후 메시지 박스 표시
     if title in ["소피의 아틀리에 DX", "피리스의 아틀리에 DX", "리디&수르의 아틀리에 DX", "루루아의 아틀리에"]:
-        messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!\n스팀에서 언어를 일본어로 설정해주세요.") 
+        messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 일본어로 변경해주세요.") 
     elif title == "라이자의 아틀리에":
-        messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!\n스팀에서 언어를 중국어 번체로 설정해주세요.")
+        messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 중국어 번체로 변경해주세요.")
     else:
         messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!")
 
