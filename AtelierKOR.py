@@ -10,30 +10,31 @@ import winreg
 import fnmatch
 import vdf
 import tkinter as tk
+from datetime import datetime
 from tkinter import PhotoImage, messagebox, StringVar, Label, Button, OptionMenu, font, DISABLED, NORMAL
 
 DB = {
     "로로나의 아틀리에 DX": [
         "Atelier Rorona ~The Alchemist of Arland~ DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "144qax7CARxAoMuDe_K4kF_zsgoTGb_qa",  # Download URL
+        "https://drive.google.com/uc?id=" + "1uEYArKmjFXBCqwf0AZIrFSEFaJe37rBI",  # Download URL
         ["Event", "Res"],  # Patch Folder
         ["A11R_x64_Release.exe", "ArlandDX_Settings.ini"]  # Patch File
     ],
     "토토리의 아틀리에 DX": [
         "Atelier Totori ~The Adventurer of Arland~ DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "16hRiKkMgaWBe2yTZ5rlAeTK-w2IxfUyD",  # Download URL
+        "https://drive.google.com/uc?id=" + "1CYmCSRMT3eVSOn_OOuDnLpHMFvpAVSDB",  # Download URL
         ["Event", "Res"],  # Patch Folder
         ["A12V_x64_Release.exe", "ArlandDX_Settings.ini"]  # Patch File
     ],
     "메루루의 아틀리에 DX": [
         "Atelier Meruru ~The Apprentice of Arland~ DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "19pdqLQTmPPLC2bWZUqLWylDdxcT6BjDC",  # Download URL
+        "https://drive.google.com/uc?id=" + "1pCiaute1tcLiFNdih1rbC9haG0B2baKd",  # Download URL
         ["Event", "Res"],  # Patch Folder
         ["A13V_x64_Release.exe", "ArlandDX_Settings.ini"]  # Patch File
     ],
     "아샤의 아틀리에 DX": [
         "Atelier Ayesha DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1eTGP2EuMh7GJf4ux8vKz4656Lu5EAPV5",  # Download URL
+        "https://drive.google.com/uc?id=" + "1kBJ82u0LyUDsWKQM-G_mr3EJpp2k1UGq",  # Download URL
         ["Event", "Res"],  # Patch Folder
         ["Atelier_Ayesha.exe", "Setting.ini"]  # Patch File
     ],
@@ -51,21 +52,21 @@ DB = {
     ],
     "소피의 아틀리에 DX": [
         "Atelier Sophie DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1-tucaRZO-i5e5Qlib22I0ETUfAPTGneD",  # Download URL
+        "https://drive.google.com/uc?id=" + "1a0tokxsD3KRUma_zXdUMeVpK_h6rJD3_",  # Download URL
         ["Data", "DLC", "Event_JP", "Saves_JP"],  # Patch Folder
         ["Atelier_Sophie_DX.exe", "gust_pak.exe"],  # Patch File
         ["PACK00_02.PAK", "PACK01.PAK", "PACK02_01.PAK"]  # Patch PAK
     ],
     "피리스의 아틀리에 DX": [
         "Atelier Firis DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1fvWOAWj-QaHBWkMTEGrFP_MnTmiw73sM",  # Download URL
+        "https://drive.google.com/uc?id=" + "1jexLNgPMGS0pjTsIFn3yNqPrga1IckXX",  # Download URL
         ["Data", "Event", "Saves"],  # Patch Folder
         ["Atelier_Firis_DX.exe", "gust_pak.exe"],  # Patch File
         ["PACK02_00.PAK", "PACK03.PAK"]  # Patch PAK
     ],
     "리디&수르의 아틀리에 DX": [
         "Atelier Lydie and Suelle DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1jcqTVOwAZ_KQEv4wsi3lc4j58N7vLdMx",  # Download URL
+        "https://drive.google.com/uc?id=" + "1376TWCw3AJUytfpl3ejInZpuMBuAf0dB",  # Download URL
         ["Data", "Event", "Saves"],  # Patch Folder
         ["Atelier_Lydie_and_Suelle_DX.exe", "gust_pak.exe"],  # Patch File
         ["PACK00D4.PAK", "PACK01.PAK", "PACK02.PAK"]  # Patch PAK
@@ -165,10 +166,10 @@ library_list = steam_path.library_path
 
 # GUI 설정
 def create_gui():
-    global message_widget, root, patch_button, dropdown_menu
+    global root, message_widget, dropdown_menu, patch_button
 
     root = tk.Tk()
-    root.title("아틀리에 시리즈 통합 한국어 패치")
+    root.title(f"아틀리에 통합 한국어 패치 툴 (Build: {datetime.today().strftime("%Y.%m.%d")})")
     root.geometry("464x330")
     root.resizable(False, False)  # 크기 조정 불가 설정
     root.grid_propagate(False)
@@ -326,9 +327,12 @@ def download_file(title):
     print_message("이 작업은 환경에 따라 1분 이상 소요될 수 있습니다.")
 
     try:
-        gdown.download(download_url, save_path, quiet=True)
+        gdown.download(download_url, save_path, quiet=False)
     except Exception as e:
-        print_message(f"Download failed: {e}") # 디버깅 메시지
+        messagebox.showerror("오류", "다운로드 주소가 변경되었습니다.\n최신 버전을 다운받은 뒤 다시 시도해주세요.\n\n확인을 누르면 자동으로 웹페이지가 열립니다.")
+        webbrowser.open("https://gall.dcinside.com/mgallery/board/view/?id=atelierseries&no=88890")
+        root.quit()
+        root.destroy()
         return
 
     print_message("다운로드가 완료되었습니다.")
@@ -367,7 +371,18 @@ def patch_file(title):
         os.makedirs(userpath, exist_ok=True)
         shutil.copy(os.path.join(filepath, "Setting.ini"), os.path.join(userpath, "Setting.ini"))
 
-    if title in ["소피의 아틀리에 DX", "피리스의 아틀리에 DX", "리디&수르의 아틀리에 DX", "네르케와 전설의 연금술사들", "루루아의 아틀리에", "라이자의 아틀리에"]:
+    if title == "소피의 아틀리에 DX":
+        for pak_file in DB[title][4]:
+            pack_path = os.path.join(path, pak_file)
+            if os.path.exists(pack_path):
+                subprocess.run([os.path.join(path, "gust_pak.exe"), pack_path])
+                for ext in [".PAK", ".pak", ".JSON", ".json"]:
+                    try:
+                        os.remove(os.path.join(path, f"{pak_file.split('.')[0]}{ext}"))
+                    except FileNotFoundError:
+                        pass
+
+    if title in ["피리스의 아틀리에 DX", "리디&수르의 아틀리에 DX", "네르케와 전설의 연금술사들", "루루아의 아틀리에", "라이자의 아틀리에"]:
         for pak_file in DB[title][4]:
             src_pack_path = os.path.join(path, "Data/" + f"{pak_file}")
             dest_pack_path = os.path.join(path, pak_file)

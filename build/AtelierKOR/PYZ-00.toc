@@ -1,4 +1,4 @@
-('D:\\kortool\\AtelierKOR\\AtelierKOR\\build\\AtelierKOR\\PYZ-00.pyz',
+('D:\\kortool\\AtelierKOR\\build\\AtelierKOR\\PYZ-00.pyz',
  [('Cryptodome',
    'C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\Cryptodome\\__init__.py',
    'PYMODULE'),
