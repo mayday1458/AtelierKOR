@@ -327,7 +327,7 @@ def download_file(title):
     print_message("이 작업은 환경에 따라 1분 이상 소요될 수 있습니다.")
 
     try:
-        gdown.download(download_url, save_path, quiet=False)
+        gdown.download(download_url, save_path, quiet=True)
     except Exception as e:
         messagebox.showerror("오류", "다운로드 주소가 변경되었습니다.\n최신 버전을 다운받은 뒤 다시 시도해주세요.\n\n확인 버튼을 누르면 웹페이지에 자동으로 연결됩니다.")
         webbrowser.open("https://gall.dcinside.com/mgallery/board/view/?id=atelierseries&no=88890")
@@ -424,8 +424,6 @@ def patch_file(title):
         messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 중국어 번체로 변경해주세요.")
     else:
         messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!")
-    root.quit()
-    root.destroy()
 
 # GUI 실행
 create_gui()
