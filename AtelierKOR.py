@@ -329,7 +329,7 @@ def download_file(title):
     try:
         gdown.download(download_url, save_path, quiet=False)
     except Exception as e:
-        messagebox.showerror("오류", "다운로드 주소가 변경되었습니다.\n최신 버전을 다운받은 뒤 다시 시도해주세요.\n\n확인을 누르면 자동으로 웹페이지가 열립니다.")
+        messagebox.showerror("오류", "다운로드 주소가 변경되었습니다.\n최신 버전을 다운받은 뒤 다시 시도해주세요.\n\n확인 버튼을 누르면 웹페이지에 자동으로 연결됩니다.")
         webbrowser.open("https://gall.dcinside.com/mgallery/board/view/?id=atelierseries&no=88890")
         root.quit()
         root.destroy()
