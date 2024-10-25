@@ -16,78 +16,78 @@ from tkinter import PhotoImage, messagebox, StringVar, Label, Button, OptionMenu
 DB = {
     "로로나의 아틀리에 DX": [
         "Atelier Rorona ~The Alchemist of Arland~ DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1uEYArKmjFXBCqwf0AZIrFSEFaJe37rBI",  # Download URL
+        "https://drive.google.com/file/d/1R0lIL2np9AOh7amCfea5qq1XWbtPgLBm/view?usp=sharing",  # Download URL
         ["Event", "Res"],  # Patch Folder
         ["A11R_x64_Release.exe", "ArlandDX_Settings.ini"]  # Patch File
     ],
     "토토리의 아틀리에 DX": [
         "Atelier Totori ~The Adventurer of Arland~ DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1CYmCSRMT3eVSOn_OOuDnLpHMFvpAVSDB",  # Download URL
+        "https://drive.google.com/file/d/19BSyAMrZnECbtzOCGYn2v1LmlDruT9CU/view?usp=sharing",  # Download URL
         ["Event", "Res"],  # Patch Folder
         ["A12V_x64_Release.exe", "ArlandDX_Settings.ini"]  # Patch File
     ],
     "메루루의 아틀리에 DX": [
         "Atelier Meruru ~The Apprentice of Arland~ DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1pCiaute1tcLiFNdih1rbC9haG0B2baKd",  # Download URL
+        "https://drive.google.com/file/d/1Yb5sXm09aPoOG1SStPX20FOH1AH3WtrX/view?usp=sharing",  # Download URL
         ["Event", "Res"],  # Patch Folder
         ["A13V_x64_Release.exe", "ArlandDX_Settings.ini"]  # Patch File
     ],
     "아샤의 아틀리에 DX": [
         "Atelier Ayesha DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1kBJ82u0LyUDsWKQM-G_mr3EJpp2k1UGq",  # Download URL
+        "https://drive.google.com/file/d/1fylXUutrBr6fUzmI3w774raV6ZEyob9z/view?usp=sharing",  # Download URL
         ["Event", "Res"],  # Patch Folder
         ["Atelier_Ayesha.exe", "Setting.ini"]  # Patch File
     ],
     "에스카&로지의 아틀리에 DX": [
         "Atelier Escha and Logy DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1_3Y46qfxo2xykbMTqjBSn8r6jLTRpLsc",  # Download URL
+        "https://drive.google.com/file/d/1ckhQ3zGNf1c1V9In-KAYIoG4MfQl24pu/view?usp=sharing",  # Download URL
         ["Data", "DLC", "Event", "Saves"],  # Patch Folder
         ["Atelier_Escha_and_Logy.exe", "Setting.ini"]  # Patch File
     ],
     "샤리의 아틀리에 DX": [
         "Atelier Shallie DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1Tmq6sCZXWxZd6Ul-kF0n60P1Gh08YTFA",  # Download URL
+        "https://drive.google.com/file/d/13wNYCTUg0ol4B2v_fvbXN04SgohWK6UZ/view?usp=sharing",  # Download URL
         ["Data", "Event_EN", "Saves_EN"],  # Patch Folder
         ["Atelier_Shallie_EN.exe", "Atelier_ShallieEnv.exe", "Setting.ini"]  # Patch File
     ],
     "소피의 아틀리에 DX": [
         "Atelier Sophie DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1a0tokxsD3KRUma_zXdUMeVpK_h6rJD3_",  # Download URL
+        "https://drive.google.com/file/d/1PLsrnXIHtc2ygF5pJSH2Oa7D8AIFqHcV/view?usp=sharing",  # Download URL
         ["Data", "DLC", "Event_JP", "Saves_JP"],  # Patch Folder
         ["Atelier_Sophie_DX.exe", "gust_pak.exe"],  # Patch File
         ["PACK00_02.PAK", "PACK01.PAK", "PACK02_01.PAK"]  # Patch PAK
     ],
     "피리스의 아틀리에 DX": [
         "Atelier Firis DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1jexLNgPMGS0pjTsIFn3yNqPrga1IckXX",  # Download URL
+        "https://drive.google.com/file/d/1vmcnrmBhWdeNdmpBl83M-UruPNaqCIQ9/view?usp=sharing",  # Download URL
         ["Data", "Event", "Saves"],  # Patch Folder
         ["Atelier_Firis_DX.exe", "gust_pak.exe"],  # Patch File
         ["PACK02_00.PAK", "PACK03.PAK"]  # Patch PAK
     ],
     "리디&수르의 아틀리에 DX": [
         "Atelier Lydie and Suelle DX",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1376TWCw3AJUytfpl3ejInZpuMBuAf0dB",  # Download URL
+        "https://drive.google.com/file/d/1CcZjLr2H-ze12diA5Y810cklK2RMUffm/view?usp=sharing",  # Download URL
         ["Data", "Event", "Saves"],  # Patch Folder
         ["Atelier_Lydie_and_Suelle_DX.exe", "gust_pak.exe"],  # Patch File
         ["PACK00D4.PAK", "PACK01.PAK", "PACK02.PAK"]  # Patch PAK
     ],
     "네르케와 전설의 연금술사들": [
         "Nelke and the Legendary Alchemists Ateliers of the New World",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1Bwq1Q4vzNBmTFgmggXfgttu3CdhNZ7qm",  # Download URL
+        "https://drive.google.com/file/d/13Q3OXSOd-xHejOWzn3LDAIGJSfZ_HyG-/view?usp=sharing",  # Download URL
         ["data", "event", "saves"],  # Patch Folder
         ["Nelke_and_the_Legendary_Alchemists.exe", "gust_pak.exe"],  # Patch File
         ["PACK00_01.PAK", "PACK01.PAK"]  # Patch PAK
     ],
     "루루아의 아틀리에": [
         "Atelier Lulua",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1QrPAt4pAVa_H_lmIUSzdBVlzvw_BcpHV",  # Download URL
+        "https://drive.google.com/file/d/1gdLbrgdZq9NiyQhoZVGJKSdj3OqNg6HC/view?usp=sharing",  # Download URL
         ["Data", "event", "saves"],  # Patch Folder
         ["Atelier_Lulua.exe", "gust_pak.exe"],  # Patch File
         ["PACK00_01.PAK", "PACK00_04_03.PAK", "PACK01.PAK", "PACK02.PAK"]  # Patch PAK
     ],
     "라이자의 아틀리에": [
         "Atelier Ryza",  # Folder Name
-        "https://drive.google.com/uc?id=" + "1dBHaAt-hCLVdhGmXlMq0Or1z8le2iD3f",  # Download URL
+        "https://drive.google.com/file/d/1NvlgaEcKBEj31iU5uyoDb7tUxHpUfmUF/view?usp=sharing",  # Download URL
         ["Data", "DLC", "event", "saves"],  # Patch Folder
         ["gust_pak.exe"],  # Patch File
         ["PACK00_04_02.PAK", "PACK01.PAK", "PACK02.PAK"]  # Patch PAK
@@ -252,6 +252,12 @@ def update_button_state(*args):
         patch_button.config(state=NORMAL)
         set_library(selected_title.get())
 
+# 다운로드 URL을 변경하는 함수
+def convert_url(view_url):
+    file_id = view_url.split("/d/")[1].split("/")[0]
+    download_url = f"https://drive.google.com/uc?id={file_id}"
+    return download_url
+
 # 라이브러리 경로를 설정하는 함수
 def set_library(title):
     global library_path
@@ -318,7 +324,7 @@ def download_file(title):
     temp_path = os.path.join(current_path, 'temp') # temp 폴더 경로
     os.makedirs(temp_path, exist_ok=True)  # temp 폴더가 존재하지 않을 경우 폴더 생성
     save_path = os.path.join(temp_path, f"{title}.7z")  # 압축 파일 저장 경로
-
+    
     # 다운로드 URL
     download_url = DB[title][1]
 
@@ -417,6 +423,8 @@ def patch_file(title):
     dropdown_menu.config(state=NORMAL)
     message_widget.config(state=DISABLED)
 
+    selected_title.set("타이틀 선택")
+
     # 패치가 완료된 후 메시지 박스 표시
     if title in ["소피의 아틀리에 DX", "피리스의 아틀리에 DX", "리디&수르의 아틀리에 DX", "루루아의 아틀리에"]:
         messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 일본어로 변경해주세요.") 
@@ -424,6 +432,9 @@ def patch_file(title):
         messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!\n\n스팀에서 게임 언어를 중국어 번체로 변경해주세요.")
     else:
         messagebox.showinfo("패치 완료", f"{title}\n한국어 패치가 완료되었습니다!")
+
+for key, value in DB.items():
+    value[1] = convert_url(value[1])
 
 # GUI 실행
 create_gui()
