@@ -12,6 +12,8 @@ import vdf
 import tkinter as tk
 from tkinter import PhotoImage, messagebox, StringVar, Label, Button, OptionMenu, font, DISABLED, NORMAL
 
+build_date = "2024.10.27"
+
 DB = {
     "로로나의 아틀리에 DX": [
         "Atelier Rorona ~The Alchemist of Arland~ DX",  # Folder Name
@@ -168,7 +170,7 @@ def create_gui():
     global root, message_widget, dropdown_menu, patch_button
 
     root = tk.Tk()
-    root.title(f"아틀리에 통합 한국어 패치 툴 (Build: 2024.10.26)")
+    root.title(f"아틀리에 통합 한국어 패치 툴 (Build: f{build_date})")
     root.geometry("464x330")
     root.resizable(False, False)  # 크기 조정 불가 설정
     root.grid_propagate(False)
