@@ -10,7 +10,6 @@ import winreg
 import fnmatch
 import vdf
 import tkinter as tk
-from datetime import datetime
 from tkinter import PhotoImage, messagebox, StringVar, Label, Button, OptionMenu, font, DISABLED, NORMAL
 
 DB = {
@@ -169,7 +168,7 @@ def create_gui():
     global root, message_widget, dropdown_menu, patch_button
 
     root = tk.Tk()
-    root.title(f"아틀리에 통합 한국어 패치 툴 (Build: {datetime.today().strftime("%Y.%m.%d")})")
+    root.title(f"아틀리에 통합 한국어 패치 툴 (Build: 2024.10.26)")
     root.geometry("464x330")
     root.resizable(False, False)  # 크기 조정 불가 설정
     root.grid_propagate(False)
@@ -439,4 +438,5 @@ for key, value in DB.items():
 # GUI 실행
 create_gui()
 
+# cd D:\kortool\AtelierKOR
 # pyinstaller --onefile --windowed --hidden-import=gdown --icon=icon.ico --add-data "icon.png;." AtelierKOR.py
