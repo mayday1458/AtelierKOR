@@ -170,7 +170,7 @@ def create_gui():
     global root, message_widget, dropdown_menu, patch_button
 
     root = tk.Tk()
-    root.title(f"아틀리에 통합 한국어 패치 툴 (Build: f{build_date})")
+    root.title(f"아틀리에 통합 한국어 패치 툴 (Build: {build_date})")
     root.geometry("464x330")
     root.resizable(False, False)  # 크기 조정 불가 설정
     root.grid_propagate(False)
