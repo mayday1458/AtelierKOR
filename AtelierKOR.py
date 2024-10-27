@@ -51,7 +51,7 @@ DB = {
     ],
     "소피의 아틀리에 DX": [
         "Atelier Sophie DX",  # Folder Name
-        "https://drive.google.com/file/d/1PLsrnXIHtc2ygF5pJSH2Oa7D8AIFqHcV/view?usp=sharing",  # Download URL
+        "https://drive.google.com/file/d/1hZS96LffoFtd6DHPTb7NXfCaWfoxz01Y/view?usp=sharing",  # Download URL
         ["Data", "DLC", "Event_JP", "Saves_JP"],  # Patch Folder
         ["Atelier_Sophie_DX.exe", "gust_pak.exe"],  # Patch File
         ["PACK00_02.PAK", "PACK01.PAK", "PACK02_01.PAK"]  # Patch PAK
@@ -334,7 +334,7 @@ def download_file(title):
     try:
         gdown.download(download_url, save_path, quiet=True)
     except Exception as e:
-        messagebox.showerror("오류", "다운로드 주소가 변경되었습니다.\n최신 버전을 다운받은 뒤 다시 시도해주세요.\n\n확인 버튼을 누르면 웹페이지에 자동으로 연결됩니다.")
+        messagebox.showerror("오류", "다운로드 주소가 변경되었습니다.\n최신 버전을 다운받은 뒤 다시 시도해주세요.")
         webbrowser.open("https://gall.dcinside.com/mgallery/board/view/?id=atelierseries&no=88890")
         root.quit()
         root.destroy()
