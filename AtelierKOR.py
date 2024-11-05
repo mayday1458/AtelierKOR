@@ -164,6 +164,8 @@ class SteamPath:
 # 전역 변수
 steam_path = SteamPath()
 library_list = steam_path.library_path
+l_cnt = 0
+lib_path = "Not Found"
 
 # GUI 설정
 def create_gui():
@@ -261,9 +263,7 @@ def convert_url(view_url):
 
 # 라이브러리 경로를 설정하는 함수
 def set_library(title):
-    global library_path
-    library_path = "Not found"
-
+    global lib_path
     if not library_list:
         messagebox.showerror("오류", "스팀이 설치되지 않았습니다.")
     else:
@@ -271,12 +271,9 @@ def set_library(title):
 
         # library_data의 경로와 folder_name이 포함된 리스트 검색
         for entry in steam_path.library_data:
-            global lib_path
             lib_path = entry[0]
             # 선택된 타이틀의 설치 폴더가 존재하는지 확인
             if os.path.exists(os.path.join(lib_path, DB[title][0])):
-                library_path = lib_path
-
                 if title == "네르케와 전설의 연금술사들":
                     print_message(f"{title}을 기반으로 경로가 설정되었습니다.")
                 else:
@@ -285,6 +282,7 @@ def set_library(title):
                 break  # 일치하는 경로를 찾으면 종료
         
         if not found:
+            lib_path = "Not Found"
             if title == "네르케와 전설의 연금술사들":
                 print_message(f"{title}이 설치되지 않았습니다.")
             else:
@@ -292,16 +290,21 @@ def set_library(title):
 
 # 패치 실행
 def run_patch():
+    global lib_path
     try:
         title = selected_title.get()  # 드롭다운 메뉴에서 선택한 타이틀
 
         # 라이브러리가 지정되지 않은 경우 오류 메시지 출력
-        if library_path == "Not found":
+        if lib_path == "Not Found":
             if title == "네르케와 전설의 연금술사들":
                 messagebox.showerror("오류", f"{title}이 설치되지 않았습니다.")
+                selected_title.set("타이틀 선택")
+                update_button_state()
                 return
             else:
                 messagebox.showerror("오류", f"{title}가 설치되지 않았습니다.")
+                selected_title.set("타이틀 선택")
+                update_button_state()
                 return
         else:
             if fnmatch.filter(os.listdir(os.path.join(lib_path, DB[title][0])), '*.exe'):
@@ -309,7 +312,19 @@ def run_patch():
                 threading.Thread(target=download_file, args=(title,)).start()
                 print("Thread started successfully.") # 디버깅 메시지
             else:
-                messagebox.showerror("오류", "게임 설치가 완료된 뒤에 패치를 진행해주세요.")
+                for entry in steam_path.library_data:
+                    lib_path = entry[0]
+                    if fnmatch.filter(os.listdir(os.path.join(lib_path, DB[title][0])), '*.exe'):
+                        l_cnt =+ 1
+                        print(f"Starting download for: {title}") # 디버깅 메시지
+                        threading.Thread(target=download_file, args=(title,)).start()
+                        print("Thread started successfully.") # 디버깅 메시지
+                        break
+                    else:
+                        l_cnt = 0
+                
+                if l_cnt == 0:
+                    messagebox.showerror("오류", "게임 설치가 완료된 뒤에 패치를 진행해주세요.")
 
     except Exception as e:
         print(f"Error starting download thread: {e}") # 디버깅 메시지
@@ -365,7 +380,7 @@ def unzip_file(title, save_path, temp_path):
 def patch_file(title):
     print_message("한국어 패치를 설치합니다.")
     
-    path = os.path.join(library_path, DB[title][0])  # 게임 설치 경로
+    path = os.path.join(lib_path, DB[title][0])  # 게임 설치 경로
     realpath = os.path.dirname(sys.executable)  # 프로그램 실행 경로
     filepath = os.path.join(realpath, "temp")  # 설치 파일 경로
     userpath = os.path.expanduser(r'~/Documents/KoeiTecmo/Nelke and the Legendary Alchemists') # 네르케 ini 파일 경로
