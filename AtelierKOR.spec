@@ -5,7 +5,7 @@ a = Analysis(
     ['AtelierKOR.py'],
     pathex=[],
     binaries=[],
-    datas=[('icon.png', '.')],
+    datas=[('icon.png', '.'), ('build_date.txt', '.')],
     hiddenimports=['gdown'],
     hookspath=[],
     hooksconfig={},

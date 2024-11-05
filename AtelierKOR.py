@@ -12,7 +12,25 @@ import vdf
 import tkinter as tk
 from tkinter import PhotoImage, messagebox, StringVar, Label, Button, OptionMenu, font, DISABLED, NORMAL
 
-build_date = "2024.11.05"
+def read_build_date():
+    if getattr(sys, 'frozen', False):
+        # 패키징된 경우
+        current_dir = sys._MEIPASS  # 메모리에서 실행 파일의 경로
+    else:
+        # 개발 중
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    file_path = os.path.join(current_dir, 'build_date.txt')
+
+    try:
+        with open(file_path, 'r') as file:
+            build_date = file.read().strip()
+        return build_date
+    except FileNotFoundError:
+        print("파일을 찾을 수 없습니다.")
+        return None
+    
+build_date = read_build_date()
 
 DB = {
     "로로나의 아틀리에 DX": [
@@ -455,5 +473,10 @@ for key, value in DB.items():
 # GUI 실행
 create_gui()
 
-# cd D:\kortool\AtelierKOR
-# pyinstaller --onefile --windowed --hidden-import=gdown --icon=icon.ico --add-data "icon.png;." AtelierKOR.py
+"""
+cd D:\kortool\AtelierKOR
+& C:/Users/User/AppData/Local/Programs/Python/Python312/python.exe build_date.py
+pyinstaller AtelierKOR.spec
+"""
+
+# pyinstaller --onefile --windowed --hidden-import=gdown --icon=icon.ico --add-data "icon.png;." --add-data "build_date.txt;." AtelierKOR.py
