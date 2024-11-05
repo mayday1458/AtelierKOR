@@ -12,7 +12,7 @@ import vdf
 import tkinter as tk
 from tkinter import PhotoImage, messagebox, StringVar, Label, Button, OptionMenu, font, DISABLED, NORMAL
 
-build_date = "2024.10.27"
+build_date = "2024.11.05"
 
 DB = {
     "로로나의 아틀리에 DX": [
